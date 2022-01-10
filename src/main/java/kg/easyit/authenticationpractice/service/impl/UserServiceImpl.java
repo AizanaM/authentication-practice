@@ -1,5 +1,9 @@
 package kg.easyit.authenticationpractice.service.impl;
 
+import kg.easyit.authenticationpractice.exceptions.UserNotFoundException;
+import kg.easyit.authenticationpractice.mapper.UserMapper;
+import kg.easyit.authenticationpractice.model.dto.UserDto;
+import kg.easyit.authenticationpractice.model.entity.User;
 import kg.easyit.authenticationpractice.repository.UserRepository;
 import kg.easyit.authenticationpractice.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -16,13 +20,36 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDto create(UserDto userDto) {
 
-        User user = user
-        return null;
+        if (userRepository.existsByEmail(userDto.getEmail())) {
+            throw new RuntimeException("Email: " + userDto.getEmail() +  " is already in use.");
+        }
+
+        if (userDto.getUserName() == null || userDto.getUserName().trim().equals("")) {
+            userDto.setUserName(userDto.getEmail().substring(0, userDto.getEmail().indexOf('@')));
+        }
+
+        if (userRepository.existsByUsername(userDto.getUserName())) {
+            throw new RuntimeException("Username: " + userDto.getUserName() + " is already in use.");
+        }
+
+        User user = User
+                .builder()
+                .firstName(userDto.getFirstName())
+                .lastName(userDto.getLastName())
+                .email(userDto.getEmail())
+                .password(userDto.getPassword())
+                .userName(userDto.getUserName())
+                .build();
+
+        userRepository.save(user);
+        return UserMapper.INSTANCE.toDto(user);
     }
 
     @Override
     public UserDto find(Long id) {
-        return null;
+        return UserMapper.INSTANCE
+                .toDto(userRepository.findById(id)
+                        .orElseThrow(() -> new UserNotFoundException("User with id=" + id + " is not found.")));
     }
 
     @Override
@@ -37,6 +64,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Username: " + username + " is not found."));
     }
 }
