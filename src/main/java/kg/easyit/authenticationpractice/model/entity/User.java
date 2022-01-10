@@ -16,7 +16,7 @@ import java.util.Collection;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table
+@Table(name = "tb_user")
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class User extends AbstractAuditable<User, Long> implements UserDetails {
 
