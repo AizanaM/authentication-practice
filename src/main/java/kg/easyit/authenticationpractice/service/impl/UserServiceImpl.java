@@ -24,12 +24,12 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("Email: " + userDto.getEmail() +  " is already in use.");
         }
 
-        if (userDto.getUserName() == null || userDto.getUserName().trim().equals("")) {
-            userDto.setUserName(userDto.getEmail().substring(0, userDto.getEmail().indexOf('@')));
+        if (userDto.getUsername() == null || userDto.getUsername().trim().equals("")) {
+            userDto.setUsername(userDto.getEmail().substring(0, userDto.getEmail().indexOf('@')));
         }
 
-        if (userRepository.existsByUsername(userDto.getUserName())) {
-            throw new RuntimeException("Username: " + userDto.getUserName() + " is already in use.");
+        if (userRepository.existsByUsername(userDto.getUsername())) {
+            throw new RuntimeException("Username: " + userDto.getUsername() + " is already in use.");
         }
 
         User user = User
@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
                 .lastName(userDto.getLastName())
                 .email(userDto.getEmail())
                 .password(userDto.getPassword())
-                .userName(userDto.getUserName())
+                .username(userDto.getUsername())
                 .build();
 
         userRepository.save(user);

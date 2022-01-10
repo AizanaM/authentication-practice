@@ -7,7 +7,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 ;import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Collection;
 
@@ -28,8 +27,8 @@ public class User extends AbstractAuditable<User, Long> implements UserDetails {
     String email;
     @Column(name = "password", nullable = false)
     String password;
-    @Column(name = "user_name", nullable = false, unique = true)
-    String userName;
+    @Column(name = "username", nullable = false, unique = true)
+    String username;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

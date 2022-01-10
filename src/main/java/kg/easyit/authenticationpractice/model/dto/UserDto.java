@@ -15,5 +15,5 @@ public class UserDto {
    String lastName;
    String email;
    String password;
-   String userName;
+   String username;
 }

@@ -9,5 +9,6 @@ public enum Authority {
     ROLE_CREATE,
     ROLE_READ,
     ROLE_DELETE,
-    ROLE_UPDATE
+    ROLE_UPDATE,
+    PERMISSIONS_READ
 }
