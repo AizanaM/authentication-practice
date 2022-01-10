@@ -80,7 +80,7 @@ public class UserServiceImpl implements UserService {
     public String refreshPassword(String email) {
         User user = userRepository.findByEmail(email).map(user1 -> {
             String oldPassword = user1.getPassword();
-            String newPassword = passwordEncoder.encode(passwordGenerator.generatePassword(10));
+            String newPassword = passwordEncoder.encode(PasswordGenerator.generatePassword());
             user1.setPassword(newPassword);
             return userRepository.save(user1);
         }).orElseThrow(() -> new RuntimeException("Email: " + email + " is not found."));
