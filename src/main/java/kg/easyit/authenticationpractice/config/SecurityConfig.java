@@ -10,4 +10,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         super.configure(http);
     }
+
+    @Override
+    public String toString() {
+        System.out.println("Hello");
+        return "SecurityPassword{Aika}";
+    }
 }
