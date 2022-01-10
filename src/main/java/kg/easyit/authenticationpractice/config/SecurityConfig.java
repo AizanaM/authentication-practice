@@ -14,6 +14,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public String toString() {
-        return "SecurityConfig{}";
+
+        System.out.println("Hello");
+        return "SecurityPassword{Aika}";
+
     }
 }
