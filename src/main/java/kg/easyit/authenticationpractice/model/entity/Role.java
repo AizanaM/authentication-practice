@@ -8,12 +8,15 @@ import javax.persistence.*;
 import java.util.List;
 
 @Data
+@Entity
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Table(name = "tb_role")
+@EqualsAndHashCode(callSuper = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Role extends AbstractPersistable<Long> {
+
     @Column(name = "role_name", nullable = false)
     String roleName;
 
