@@ -6,6 +6,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         super.configure(http);
@@ -13,7 +14,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public String toString() {
+
         System.out.println("Hello");
         return "SecurityPassword{Aika}";
+
     }
 }
