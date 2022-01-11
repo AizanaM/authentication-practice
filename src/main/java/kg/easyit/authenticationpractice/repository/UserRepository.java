@@ -1,7 +1,6 @@
 package kg.easyit.authenticationpractice.repository;
 
 import kg.easyit.authenticationpractice.model.entity.User;
-import org.hibernate.persister.entity.Loadable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

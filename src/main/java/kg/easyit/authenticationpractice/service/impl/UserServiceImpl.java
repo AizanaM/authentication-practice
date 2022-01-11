@@ -4,20 +4,14 @@ import kg.easyit.authenticationpractice.util.PasswordGenerator;
 import kg.easyit.authenticationpractice.exceptions.UserNotFoundException;
 import kg.easyit.authenticationpractice.mapper.UserMapper;
 import kg.easyit.authenticationpractice.model.dto.UserDto;
-import kg.easyit.authenticationpractice.model.entity.Authority;
 import kg.easyit.authenticationpractice.model.entity.User;
 import kg.easyit.authenticationpractice.repository.UserRepository;
 import kg.easyit.authenticationpractice.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
