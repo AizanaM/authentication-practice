@@ -2,12 +2,16 @@ package kg.easyit.authenticationpractice.model.entity;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.jpa.domain.AbstractAuditable;
+import org.springframework.data.jpa.domain.AbstractPersistable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 ;import javax.persistence.*;
 import java.util.Collection;
+import java.util.Date;
 import java.util.stream.Collectors;
 
 @Data
@@ -18,7 +22,7 @@ import java.util.stream.Collectors;
 @Table(name = "tb_user")
 @EqualsAndHashCode(callSuper = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class User extends AbstractAuditable<User, Long> implements UserDetails {
+public class User extends AbstractPersistable<Long> implements UserDetails {
 
     @Column(name = "first_name", nullable = false)
     String firstName;
@@ -39,6 +43,15 @@ public class User extends AbstractAuditable<User, Long> implements UserDetails {
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     Role role;
 
+    @CreationTimestamp
+    @Column(name = "date_created", nullable = false, columnDefinition = "TIMESTAMP DEFAULT NOW()")
+    Date dateCreated;
+
+    @UpdateTimestamp
+    Date dateUpdated;
+
+    @Column(name = "is_active", nullable = false, columnDefinition = "BOOLEAN DEFAULT TRUE")
+    Boolean isActive;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -60,22 +73,22 @@ public class User extends AbstractAuditable<User, Long> implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return isActive;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return isActive;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return isActive;
     }
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return isActive;
     }
 
 }
