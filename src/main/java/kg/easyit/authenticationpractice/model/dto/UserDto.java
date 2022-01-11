@@ -2,6 +2,7 @@ package kg.easyit.authenticationpractice.model.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import kg.easyit.authenticationpractice.model.entity.Role;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -19,4 +20,5 @@ public class UserDto {
    @JsonIgnore
    String password;
    String username;
+   Role role;
 }

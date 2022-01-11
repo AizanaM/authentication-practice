@@ -1,6 +1,7 @@
 package kg.easyit.authenticationpractice.repository;
 
 import kg.easyit.authenticationpractice.model.entity.User;
+import org.hibernate.persister.entity.Loadable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,5 +14,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     boolean existsByUsername(String username);
     Optional<User> findByUsername(String username);
     Optional<User> findByEmail(String email);
+    Optional<User> findByIdAndIsActiveTrue(Long id);
 
 }

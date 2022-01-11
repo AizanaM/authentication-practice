@@ -63,18 +63,26 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto update(UserDto userDto) {
-        return null;
+        return UserMapper.INSTANCE.toDto(userRepository
+                .findByIdAndIsActiveTrue(userDto.getId())
+                .map(user -> {
+                    user.setFirstName(userDto.getFirstName());
+                    user.setLastName(userDto.getLastName());
+                    user.setEmail(userDto.getEmail());
+                    user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+                    user.setUsername(userDto.getUsername());
+                    return userRepository.save(user);
+                }).orElseThrow(() -> new UserNotFoundException("User with id=" + userDto.getId() + " is not found.")));
     }
 
     @Override
     public UserDto delete(Long id) {
-        return null;
-    }
-
-    // не тут должен быть
-    @Override
-    public List<Authority> getAllAuthorities() {
-        return Stream.of(Authority.values()).collect(Collectors.toList());
+        return UserMapper.INSTANCE.toDto(userRepository
+                .findByIdAndIsActiveTrue(id)
+                .map(user -> {user.setIsActive(false);
+                return userRepository.save(user);
+                })
+                .orElseThrow(() -> new UserNotFoundException("User with id=" + id + " is not found.")));
     }
 
     @Override
