@@ -1,10 +1,7 @@
-package kg.easyit.authenticationpractice.config;
-
-import org.springframework.context.annotation.Configuration;
+package kg.easyit.authenticationpractice.util;
 
 import java.util.Random;
 
-@Configuration
 public class PasswordGenerator {
 
     public static String generatePassword(){

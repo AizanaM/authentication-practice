@@ -1,6 +1,6 @@
 package kg.easyit.authenticationpractice.service.impl;
 
-import kg.easyit.authenticationpractice.config.PasswordGenerator;
+import kg.easyit.authenticationpractice.util.PasswordGenerator;
 import kg.easyit.authenticationpractice.exceptions.UserNotFoundException;
 import kg.easyit.authenticationpractice.mapper.UserMapper;
 import kg.easyit.authenticationpractice.model.dto.UserDto;
@@ -9,6 +9,7 @@ import kg.easyit.authenticationpractice.model.entity.User;
 import kg.easyit.authenticationpractice.repository.UserRepository;
 import kg.easyit.authenticationpractice.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,7 +25,6 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final PasswordGenerator passwordGenerator;
 
     @Override
     public UserDto create(UserDto userDto) {
@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
                 .firstName(userDto.getFirstName())
                 .lastName(userDto.getLastName())
                 .email(userDto.getEmail())
-                .password(userDto.getPassword())
+                .password(passwordEncoder.encode(userDto.getPassword()))
                 .username(userDto.getUsername())
                 .build();
 
@@ -71,6 +71,7 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
+    // не тут должен быть
     @Override
     public List<Authority> getAllAuthorities() {
         return Stream.of(Authority.values()).collect(Collectors.toList());
@@ -79,9 +80,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public String refreshPassword(String email) {
         User user = userRepository.findByEmail(email).map(user1 -> {
-            String oldPassword = user1.getPassword();
-            String newPassword = passwordEncoder.encode(PasswordGenerator.generatePassword());
-            user1.setPassword(newPassword);
+            String newPassword = PasswordGenerator.generatePassword();
+            // send to email
+            user1.setPassword(passwordEncoder.encode(newPassword));
             return userRepository.save(user1);
         }).orElseThrow(() -> new RuntimeException("Email: " + email + " is not found."));
 

@@ -1,6 +1,7 @@
 package kg.easyit.authenticationpractice.model.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -14,6 +15,8 @@ public class UserDto {
    String firstName;
    String lastName;
    String email;
+
+   @JsonIgnore
    String password;
    String username;
 }
