@@ -15,8 +15,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity // подключает собственный Security
 @RequiredArgsConstructor
-@EnableGlobalMethodSecurity(prePostEnabled = true) // включает защиту для методов контроллера
+@EnableGlobalMethodSecurity(prePostEnabled = true) // включает защиту для методов контролера
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
 
     private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
