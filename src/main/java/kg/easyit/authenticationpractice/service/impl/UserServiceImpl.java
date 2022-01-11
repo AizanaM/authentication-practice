@@ -71,11 +71,6 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
-    // не тут должен быть
-    @Override
-    public List<Authority> getAllAuthorities() {
-        return Stream.of(Authority.values()).collect(Collectors.toList());
-    }
 
     @Override
     public String refreshPassword(String email) {

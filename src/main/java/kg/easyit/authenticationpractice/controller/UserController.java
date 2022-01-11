@@ -40,12 +40,6 @@ public class UserController {
         }
     }
 
-    @PreAuthorize("hasAuthority(PERMISSSIONS_READ)")
-    @PostMapping("/get-all-authorities")
-    public ResponseEntity<?> getAllAuthorities() {
-        return ResponseEntity.ok(userService.getAllAuthorities());
-    }
-
     @PreAuthorize("hasAuthority(USER_UPDATE)")
     @PostMapping("/update")
     public ResponseEntity<?> update(@RequestBody UserDto userDto) {
