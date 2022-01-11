@@ -14,7 +14,6 @@ public interface UserService extends UserDetailsService {
     UserDto find(Long id);
     UserDto update(UserDto userDto);
     UserDto delete(Long id);
-    List<Authority> getAllAuthorities();
     String refreshPassword(String email);
 
 }
