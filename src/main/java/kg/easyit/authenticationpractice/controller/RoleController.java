@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -18,7 +17,7 @@ public class RoleController {
 
     private final RoleService roleService;
 
-    @PreAuthorize("hasAuthority(PERMISSIONS_READ)")
+    @PreAuthorize("hasAuthority('PERMISSIONS_READ')")
     @PostMapping("/get-all-authorities")
     public ResponseEntity<?> getAllAuthorities() {
         try{
@@ -31,14 +30,14 @@ public class RoleController {
         }
     }
 
-    @PreAuthorize("hasAnyAuthority(AUTHORITY_READ)")
+    @PreAuthorize("hasAnyAuthority('AUTHORITY_READ')")
     @PostMapping("/read")
     public ResponseEntity<?> create(@RequestBody RoleDto roleDto) {
         try{
             log.info("Role creating.");
             return ResponseEntity.ok(roleService.create(roleDto));
         } catch (RuntimeException ex){
-            log.error("Role creating failed. ");
+            log.error("Role creating failed. Role with name=" + roleDto.getRoleName() + " already exists.");
             ex.printStackTrace();
             return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
         }

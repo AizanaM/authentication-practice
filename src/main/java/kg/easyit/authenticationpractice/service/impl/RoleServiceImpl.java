@@ -24,11 +24,9 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public RoleDto create(RoleDto roleDto) {
-
         if (roleRepository.existsByRoleName(roleDto.getRoleName())) {
             throw new RuntimeException("Role name: " + roleDto.getRoleName() + " already exists.");
         }
-
         return RoleMapper.INSTANCE
                 .toDto(roleRepository
                         .save(RoleMapper.INSTANCE.toEntity(roleDto)));
