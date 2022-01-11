@@ -7,7 +7,6 @@ import kg.easyit.authenticationpractice.repository.RoleRepository;
 import kg.easyit.authenticationpractice.service.RoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -25,6 +24,11 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public RoleDto create(RoleDto roleDto) {
+
+        if (roleRepository.existsByRoleName(roleDto.getRoleName())) {
+            throw new RuntimeException("Role name: " + roleDto.getRoleName() + " already exists.");
+        }
+
         return RoleMapper.INSTANCE
                 .toDto(roleRepository
                         .save(RoleMapper.INSTANCE.toEntity(roleDto)));

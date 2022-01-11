@@ -7,9 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @Slf4j
@@ -24,24 +22,23 @@ public class RoleController {
     @PostMapping("/get-all-authorities")
     public ResponseEntity<?> getAllAuthorities() {
         try{
-            log.info("Getting all authorities");
+            log.info("Getting all authorities.");
             return ResponseEntity.ok(roleService.getAuthorities());
         }catch (RuntimeException ex){
-            log.error("Failed getting all authorities");
+            log.error("Failed getting all authorities. Authorities are not available.");
             ex.printStackTrace();
             return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
         }
     }
 
-
     @PreAuthorize("hasAnyAuthority(AUTHORITY_READ)")
     @PostMapping("/read")
-    public ResponseEntity<?> create(RoleDto roleDto) {
+    public ResponseEntity<?> create(@RequestBody RoleDto roleDto) {
         try{
-            log.info("Role creating");
+            log.info("Role creating.");
             return ResponseEntity.ok(roleService.create(roleDto));
         } catch (RuntimeException ex){
-            log.error("Role creating failed");
+            log.error("Role creating failed. ");
             ex.printStackTrace();
             return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
         }
