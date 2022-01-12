@@ -1,6 +1,5 @@
 package kg.easyit.authenticationpractice.model.dto;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import kg.easyit.authenticationpractice.model.entity.Role;
 import lombok.*;

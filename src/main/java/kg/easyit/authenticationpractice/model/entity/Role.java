@@ -17,10 +17,10 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Role extends AbstractPersistable<Long> {
 
-    @Column(name = "role_name", nullable = false)
+    @Column(name = "role_name", nullable = false, unique = true)
     String roleName;
 
-    @ElementCollection//без энтити создает нам таблицы
+    @ElementCollection // без энтити создает нам таблицы
     @CollectionTable(name = "role_has_authorities", joinColumns = @JoinColumn(name = "role_id"))
     @Column(name = "authorities_id", nullable = false)
     List<Authority> authorities;
