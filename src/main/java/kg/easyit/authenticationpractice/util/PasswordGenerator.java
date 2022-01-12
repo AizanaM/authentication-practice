@@ -9,7 +9,7 @@ public class PasswordGenerator {
         int length = 10;
         Random rnd = new Random();
         StringBuilder sb = new StringBuilder(length);
-        for (int i = 0; i < length; length++) {
+        for (int i = 0; i < length; i++) {
             sb.append(randomPassword.charAt(rnd.nextInt(randomPassword.length())));
         }
         return sb.toString();

@@ -18,12 +18,12 @@ public class RoleController {
     private final RoleService roleService;
 
     @PreAuthorize("hasAuthority('PERMISSIONS_READ')")
-    @PostMapping("/get-all-authorities")
+    @GetMapping("/get-all-authorities")
     public ResponseEntity<?> getAllAuthorities() {
-        try{
+        try {
             log.info("Getting all authorities.");
             return ResponseEntity.ok(roleService.getAuthorities());
-        }catch (RuntimeException ex){
+        } catch (RuntimeException ex){
             log.error("Failed getting all authorities. Authorities are not available.");
             ex.printStackTrace();
             return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
@@ -31,9 +31,9 @@ public class RoleController {
     }
 
     @PreAuthorize("hasAnyAuthority('AUTHORITY_READ')")
-    @PostMapping("/read")
+    @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody RoleDto roleDto) {
-        try{
+        try {
             log.info("Role creating.");
             return ResponseEntity.ok(roleService.create(roleDto));
         } catch (RuntimeException ex){
