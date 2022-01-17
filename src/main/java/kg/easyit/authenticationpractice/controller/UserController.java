@@ -1,6 +1,7 @@
 package kg.easyit.authenticationpractice.controller;
 
 import kg.easyit.authenticationpractice.model.dto.UserDto;
+import kg.easyit.authenticationpractice.request.RefreshPasswordRequest;
 import kg.easyit.authenticationpractice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +35,7 @@ public class UserController {
     }
 
     @PreAuthorize("hasAuthority('USER_READ')")
-    @PostMapping("/get/{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity<?> getUser(@PathVariable Long id) {
         try {
             log.info("Reading user with id=" + id);
@@ -47,7 +48,7 @@ public class UserController {
     }
 
     @PreAuthorize("hasAuthority('USER_UPDATE')")
-    @PostMapping("/update")
+    @PutMapping("/update")
     public ResponseEntity<?> update(@RequestBody UserDto userDto) {
         try {
             log.info("Updating user.");
@@ -61,19 +62,19 @@ public class UserController {
 
     @PreAuthorize("hasAuthority('USER_UPDATE')")
     @PutMapping("/refresh-password")
-    public ResponseEntity<?> refreshPassword(@RequestBody String email) {
+    public ResponseEntity<?> refreshPassword(@RequestBody RefreshPasswordRequest request) {
         try {
             log.info("Refreshing user password.");
-            return ResponseEntity.ok(userService.refreshPassword(email));
+            return ResponseEntity.ok(userService.refreshPassword(request));
         } catch (RuntimeException ex) {
-            log.error("User password refreshing failed. User with email=" + email + " is not found.");
+            log.error("User password refreshing failed. User with email=" + request.getEmail() + " is not found.");
             ex.printStackTrace();
             return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
         }
     }
 
     @PreAuthorize("hasAuthority('USER_DELETE')")
-    @PostMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         try {
             log.info("Deleting user.");

@@ -1,6 +1,7 @@
 package kg.easyit.authenticationpractice.service;
 
 import kg.easyit.authenticationpractice.model.dto.UserDto;
+import kg.easyit.authenticationpractice.request.RefreshPasswordRequest;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,6 @@ public interface UserService extends UserDetailsService {
     UserDto find(Long id);
     UserDto update(UserDto userDto);
     UserDto delete(Long id);
-    String refreshPassword(String email);
+    String refreshPassword(RefreshPasswordRequest request);
 
 }
